@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battledarts</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Battledarts</h1>
+    <div id="game-container">
+        <!-- Team Size Selection -->
+        <div id="team-size-selection">
+            <h2>Select Team Size</h2>
+            <select id="team-size">
+                <option value="1">1v1 (3 ships each)</option>
+                <option value="2">2v2 (4 ships each)</option>
+                <option value="3">3v3 (6 ships each)</option>
+            </select>
+            <button onclick="startSetup()">Start Setup</button>
+        </div>
+
+        <!-- Setup Phase -->
+        <div id="setup-phase" style="display: none;">
+            <h2>Setup Phase</h2>
+            <label>Team: <select id="team-select">
+                <option value="1">Team 1</option>
+                <option value="2">Team 2</option>
+            </select></label>
+            <p>Enter ship numbers (1-20) and lives based on your throws:</p>
+            <input type="text" id="ship-number" placeholder="Number (1-20) or 'B' for bullseye">
+            <input type="number" id="ship-lives" min="1" max="5" placeholder="Lives">
+            <button onclick="addShip()">Add Ship</button>
+            <button onclick="finishSetup()">Finish Setup</button>
+            <div id="ship-list"></div>
+        </div>
+
+        <!-- Gameplay Phase -->
+        <div id="game-phase" style="display: none;">
+            <h2>Gameplay</h2>
+            <p>Current Turn: <span id="current-team">Team 1</span></p>
+            <input type="text" id="throw-number" placeholder="Throw Number (1-20) or 'B' for bullseye">
+            <button onclick="submitThrow()">Throw Dart</button>
+            <div id="throw-results">
+                <div id="hits-column">
+                    <h3>Hits</h3>
+                    <p id="hits-list"></p>
+                </div>
+                <div id="misses-column">
+                    <h3>Misses</h3>
+                    <p id="misses-list"></p>
+                </div>
+            </div>
+            <div id="team1-status">
+                <h3>Team 1 Ships</h3>
+                <p id="team1-ships"></p>
+            </div>
+            <div id="team2-status">
+                <h3>Team 2 Ships</h3>
+                <p id="team2-ships"></p>
+            </div>
+        </div>
+
+        <!-- Turn Transition Phase -->
+        <div id="turn-transition" style="display: none;">
+            <h2>Turn Over</h2>
+            <p>Team <span id="last-team"></span> has finished their turn.</p>
+            <button onclick="startNextTurn()">Next Team: Team <span id="next-team"></span></button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

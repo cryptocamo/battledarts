@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-image: url('Battledarts.jpg'); /* Your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+#game-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Title styling */
+h1 {
+    font-family: 'Impact', Arial, sans-serif;
+    font-size: 80px;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Team size selection heading */
+#team-size-selection h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Setup phase heading */
+#setup-phase h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Team label */
+#setup-phase label {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Instruction paragraph */
+#setup-phase p {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    margin: 10px 0;
+}
+
+/* Ship list text */
+#ship-list {
+    margin-top: 10px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Gameplay heading */
+#game-phase h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Current turn text */
+#game-phase p {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    margin: 10px 0;
+}
+
+/* Throw results columns */
+#throw-results {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#hits-column, #misses-column {
+    width: 45%;
+    text-align: left;
+}
+
+#hits-column h3, #misses-column h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+#hits-list, #misses-list {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Team status sections */
+#team1-status, #team2-status {
+    margin-top: 20px;
+}
+
+/* Team status headings */
+#team1-status h3, #team2-status h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Team ships text */
+#team1-ships, #team2-ships {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Turn transition heading */
+#turn-transition h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Turn transition text */
+#turn-transition p {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    margin: 10px 0;
+}
+
+/* Rest of your CSS */
+input, button {
+    margin: 5px;
+    padding: 5px;
+}
