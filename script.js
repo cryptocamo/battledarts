@@ -14,22 +14,24 @@ function showImage(imageId) {
     image.style.display = "block";
     setTimeout(() => {
         image.style.display = "none";
-    }, 2000); // 2000ms = 2 seconds
+    }, 2000);
 }
 
-// Start setup phase
+// Start setup phase for Team 1
 function startSetup() {
     gameState.teamSize = parseInt(document.getElementById("team-size").value);
+    gameState.currentTeam = 1; // Start with Team 1
     document.getElementById("team-size-selection").style.display = "none";
     document.getElementById("setup-phase").style.display = "block";
+    document.getElementById("current-team-setup").textContent = "Team 1";
 }
 
 // Add a ship during setup
 function addShip() {
-    const team = document.getElementById("team-select").value;
+    const team = gameState.currentTeam;
     const numberInput = document.getElementById("ship-number").value;
     const lives = document.getElementById("ship-lives").value;
-    const teamData = team === "1" ? gameState.team1 : gameState.team2;
+    const teamData = team === 1 ? gameState.team1 : gameState.team2;
 
     let number;
     if (!numberInput) {
@@ -70,7 +72,7 @@ function addShip() {
 // Display ships in setup phase
 function updateShipList(team) {
     const shipList = document.getElementById("ship-list");
-    const teamData = team === "1" ? gameState.team1 : gameState.team2;
+    const teamData = team === 1 ? gameState.team1 : gameState.team2;
     shipList.innerHTML = `Team ${team} Ships:<br>` + 
         teamData.ships.map(ship => 
             `Number ${ship.number === "B" ? "Bullseye" : ship.number}: ${ship.lives} lives`
@@ -79,8 +81,8 @@ function updateShipList(team) {
 
 // Finish setup for a team
 function finishSetup() {
-    const team = document.getElementById("team-select").value;
-    const teamData = team === "1" ? gameState.team1 : gameState.team2;
+    const team = gameState.currentTeam;
+    const teamData = team === 1 ? gameState.team1 : gameState.team2;
     const requiredShips = gameState.teamSize === 1 ? 3 : gameState.teamSize === 2 ? 4 : 6;
 
     if (teamData.ships.length < requiredShips) {
@@ -90,19 +92,25 @@ function finishSetup() {
 
     teamData.setupDone = true;
     document.getElementById("ship-list").innerHTML = "";
-    alert(`Team ${team} setup complete! Switch to Team ${team === "1" ? "2" : "1"}.`);
+    alert(`Team ${team} setup complete!`);
 
-    if (team === "1") {
-        document.getElementById("team-select").value = "2";
-    } else {
-        document.getElementById("team-select").value = "1";
-    }
-
-    if (gameState.team1.setupDone && gameState.team2.setupDone) {
+    if (team === 1) {
+        // Switch to Team 2 setup
+        gameState.currentTeam = 2;
+        document.getElementById("current-team-setup").textContent = "Team 2";
+    } else if (team === 2) {
+        // Both teams done, show setup transition
         document.getElementById("setup-phase").style.display = "none";
-        document.getElementById("game-phase").style.display = "block";
-        updateGameDisplay();
+        document.getElementById("setup-transition").style.display = "block";
     }
+}
+
+// Start gameplay after setup transition
+function startGameplay() {
+    gameState.currentTeam = 1; // Start with Team 1 for gameplay
+    document.getElementById("setup-transition").style.display = "none";
+    document.getElementById("game-phase").style.display = "block";
+    updateGameDisplay();
 }
 
 // Submit a throw during gameplay
@@ -136,13 +144,12 @@ function submitThrow() {
     updateGameDisplay();
     document.getElementById("throw-number").value = "";
 
-    // Show appropriate image based on result
     if (result === "Sunk!") {
-        showImage("sink-image"); // Show sink image for sinking a ship
+        showImage("sink-image");
     } else if (result === "Hit!") {
-        showImage("hit-image"); // Show hit image for a regular hit
+        showImage("hit-image");
     } else if (result === "Miss!") {
-        showImage("miss-image"); // Show miss image for a miss
+        showImage("miss-image");
     }
 
     if (gameState.throwsThisTurn === 3) {
@@ -151,7 +158,7 @@ function submitThrow() {
             document.getElementById("turn-transition").style.display = "block";
             document.getElementById("last-team").textContent = attackingTeam;
             document.getElementById("next-team").textContent = attackingTeam === 1 ? 2 : 1;
-        }, 2000); // Delay matches image duration
+        }, 2000);
     }
 
     if (defendingTeam.ships.every(ship => ship.lives === 0)) {
