@@ -23,10 +23,7 @@
         <!-- Setup Phase -->
         <div id="setup-phase" style="display: none;">
             <h2>Setup Phase</h2>
-            <label>Team: <select id="team-select">
-                <option value="1">Team 1</option>
-                <option value="2">Team 2</option>
-            </select></label>
+            <p id="current-team-setup">Team 1</p> <!-- Static text instead of dropdown -->
             <p>Enter ship numbers (1-20) and lives based on your throws:</p>
             <label>Ship Number: 
                 <select id="ship-number">
@@ -71,6 +68,13 @@
             <button onclick="addShip()">Add Ship</button>
             <button onclick="finishSetup()">Finish Setup</button>
             <div id="ship-list"></div>
+        </div>
+
+        <!-- Setup Transition Phase -->
+        <div id="setup-transition" style="display: none;">
+            <h2>Setup Complete</h2>
+            <p>Both teams have finished setting up their ships.</p>
+            <button onclick="startGameplay()">Start Gameplay</button>
         </div>
 
         <!-- Gameplay Phase -->
