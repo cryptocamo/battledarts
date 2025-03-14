@@ -8,6 +8,15 @@ let gameState = {
     allThrows: []
 };
 
+// Function to show an image for 2 seconds
+function showImage(imageId) {
+    const image = document.getElementById(imageId);
+    image.style.display = "block";
+    setTimeout(() => {
+        image.style.display = "none";
+    }, 2000); // 2000ms = 2 seconds
+}
+
 // Start setup phase
 function startSetup() {
     gameState.teamSize = parseInt(document.getElementById("team-size").value);
@@ -22,7 +31,6 @@ function addShip() {
     const lives = document.getElementById("ship-lives").value;
     const teamData = team === "1" ? gameState.team1 : gameState.team2;
 
-    // Validate inputs
     let number;
     if (!numberInput) {
         alert("Please select a ship number!");
@@ -43,7 +51,7 @@ function addShip() {
     }
 
     const livesNum = parseInt(lives);
-    if (isNaN(livesNum) || livesNum < 1 || livesNum > 9) { // Updated max to 9
+    if (isNaN(livesNum) || livesNum < 1 || livesNum > 9) {
         alert("Invalid lives selected! Must be between 1 and 9.");
         return;
     }
@@ -128,19 +136,31 @@ function submitThrow() {
     updateGameDisplay();
     document.getElementById("throw-number").value = "";
 
+    // Show appropriate image based on result
+    if (result === "Sunk!") {
+        showImage("sink-image"); // Show sink image for sinking a ship
+    } else if (result === "Hit!") {
+        showImage("hit-image"); // Show hit image for a regular hit
+    } else if (result === "Miss!") {
+        showImage("miss-image"); // Show miss image for a miss
+    }
+
     if (gameState.throwsThisTurn === 3) {
         setTimeout(() => {
             document.getElementById("game-phase").style.display = "none";
             document.getElementById("turn-transition").style.display = "block";
             document.getElementById("last-team").textContent = attackingTeam;
             document.getElementById("next-team").textContent = attackingTeam === 1 ? 2 : 1;
-        }, 500);
+        }, 2000); // Delay matches image duration
     }
 
     if (defendingTeam.ships.every(ship => ship.lives === 0)) {
-        alert(`Team ${attackingTeam} wins!`);
-        document.getElementById("game-phase").innerHTML = `<h2>Team ${attackingTeam} Wins!</h2>`;
-        document.getElementById("turn-transition").style.display = "none";
+        showImage("win-image");
+        setTimeout(() => {
+            alert(`Team ${attackingTeam} wins!`);
+            document.getElementById("game-phase").innerHTML = `<h2>Team ${attackingTeam} Wins!</h2>`;
+            document.getElementById("turn-transition").style.display = "none";
+        }, 2000);
     }
 }
 
