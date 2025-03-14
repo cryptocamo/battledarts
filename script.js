@@ -5,7 +5,7 @@ let gameState = {
     team2: { ships: [], setupDone: false },
     currentTeam: 1,
     throwsThisTurn: 0,
-    allThrows: [] // Track all throws throughout the game
+    allThrows: []
 };
 
 // Start setup phase
@@ -18,23 +18,33 @@ function startSetup() {
 // Add a ship during setup
 function addShip() {
     const team = document.getElementById("team-select").value;
-    const numberInput = document.getElementById("ship-number").value.trim().toUpperCase();
-    const lives = parseInt(document.getElementById("ship-lives").value);
+    const numberInput = document.getElementById("ship-number").value;
+    const lives = document.getElementById("ship-lives").value;
     const teamData = team === "1" ? gameState.team1 : gameState.team2;
 
+    // Validate inputs
     let number;
-    if (numberInput === "B" || numberInput === "BULLSEYE") {
+    if (!numberInput) {
+        alert("Please select a ship number!");
+        return;
+    } else if (numberInput === "B") {
         number = "B";
     } else {
         number = parseInt(numberInput);
         if (isNaN(number) || number < 1 || number > 20) {
-            alert("Enter a number between 1-20 or 'B' for bullseye!");
+            alert("Invalid number selected!");
             return;
         }
     }
 
-    if (isNaN(lives) || lives < 1) {
-        alert("Lives must be a positive number!");
+    if (!lives) {
+        alert("Please select the number of lives!");
+        return;
+    }
+
+    const livesNum = parseInt(lives);
+    if (isNaN(livesNum) || livesNum < 1 || livesNum > 9) { // Updated max to 9
+        alert("Invalid lives selected! Must be between 1 and 9.");
         return;
     }
 
@@ -43,10 +53,10 @@ function addShip() {
         return;
     }
 
-    teamData.ships.push({ number, lives, originalLives: lives });
+    teamData.ships.push({ number, lives: livesNum, originalLives: livesNum });
     updateShipList(team);
-    document.getElementById("ship-number").value = "";
-    document.getElementById("ship-lives").value = "";
+    document.getElementById("ship-number").selectedIndex = 0;
+    document.getElementById("ship-lives").selectedIndex = 0;
 }
 
 // Display ships in setup phase
@@ -115,17 +125,16 @@ function submitThrow() {
 
     gameState.allThrows.push({ team: attackingTeam, number, result });
     gameState.throwsThisTurn++;
-    updateGameDisplay(); // Update display immediately after each throw
+    updateGameDisplay();
     document.getElementById("throw-number").value = "";
 
     if (gameState.throwsThisTurn === 3) {
-        // Delay transition slightly to show the 3rd throw result
         setTimeout(() => {
             document.getElementById("game-phase").style.display = "none";
             document.getElementById("turn-transition").style.display = "block";
             document.getElementById("last-team").textContent = attackingTeam;
             document.getElementById("next-team").textContent = attackingTeam === 1 ? 2 : 1;
-        }, 1000); // 1000ms delay to let the user see the result
+        }, 500);
     }
 
     if (defendingTeam.ships.every(ship => ship.lives === 0)) {
@@ -162,7 +171,6 @@ function updateGameDisplay() {
             .join("<br>");
     }
 
-    // Filter throws for the current team
     const teamThrows = gameState.allThrows.filter(t => t.team === gameState.currentTeam);
     const hits = teamThrows
         .filter(t => t.result === "Hit!" || t.result === "Sunk!")
