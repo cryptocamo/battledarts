@@ -28,8 +28,46 @@
                 <option value="2">Team 2</option>
             </select></label>
             <p>Enter ship numbers (1-20) and lives based on your throws:</p>
-            <input type="text" id="ship-number" placeholder="Number (1-20) or 'B' for bullseye">
-            <input type="number" id="ship-lives" min="1" max="5" placeholder="Lives">
+            <label>Ship Number: 
+                <select id="ship-number">
+                    <option value="" disabled selected>Select a number</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="B">Bullseye</option>
+                </select>
+            </label>
+            <label>Lives: 
+                <select id="ship-lives">
+                    <option value="" disabled selected>Select lives</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </label>
             <button onclick="addShip()">Add Ship</button>
             <button onclick="finishSetup()">Finish Setup</button>
             <div id="ship-list"></div>
