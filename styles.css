@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     padding: 20px;
-    background-image: url('Battledarts.jpg');
+    background-image: url('background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -47,6 +47,8 @@ h1 {
     font-weight: bold;
     color: white;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    display: block; /* Stack labels vertically on mobile */
+    margin: 10px 0;
 }
 
 /* Instruction paragraph */
@@ -156,13 +158,87 @@ h1 {
     left: 0;
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
+    object-fit: contain; /* Changed to contain for better mobile scaling */
     z-index: 1000;
     display: none;
+    background-color: rgba(0, 0, 0, 0.8); /* Optional: dark overlay for contrast */
 }
 
 /* Rest of your CSS */
-input, button {
+input, button, select {
     margin: 5px;
     padding: 5px;
+    width: 100%; /* Full width on mobile */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Media Queries for Mobile Optimization */
+@media screen and (max-width: 600px) {
+    /* Adjust title */
+    h1 {
+        font-size: 40px; /* Smaller on mobile */
+    }
+
+    /* Team size selection */
+    #team-size-selection h2 {
+        font-size: 24px;
+    }
+
+    /* Setup phase */
+    #setup-phase h2 {
+        font-size: 24px;
+    }
+    #setup-phase label {
+        font-size: 18px;
+    }
+    #setup-phase p {
+        font-size: 16px;
+    }
+    #ship-list {
+        font-size: 14px;
+    }
+
+    /* Gameplay phase */
+    #game-phase h2 {
+        font-size: 24px;
+    }
+    #game-phase p {
+        font-size: 16px;
+    }
+    #throw-results {
+        flex-direction: column; /* Stack columns vertically on mobile */
+    }
+    #hits-column, #misses-column {
+        width: 100%; /* Full width on mobile */
+        margin-bottom: 10px;
+    }
+    #hits-column h3, #misses-column h3 {
+        font-size: 18px;
+    }
+    #hits-list, #misses-list {
+        font-size: 14px;
+    }
+    #team1-status h3, #team2-status h3 {
+        font-size: 18px;
+    }
+    #team1-ships, #team2-ships {
+        font-size: 14px;
+    }
+
+    /* Turn transition */
+    #turn-transition h2 {
+        font-size: 24px;
+    }
+    #turn-transition p {
+        font-size: 16px;
+    }
+
+    /* Images */
+    #hit-image, #miss-image, #sink-image, #win-image {
+        width: 100vw;
+        height: 100vh;
+        object-fit: contain; /* Ensure full image is visible */
+        max-width: 100%; /* Prevent overflow */
+        max-height: 100%;
+    }
 }
