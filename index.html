@@ -23,7 +23,7 @@
         <!-- Setup Phase -->
         <div id="setup-phase" style="display: none;">
             <h2>Setup Phase</h2>
-            <p id="current-team-setup">Team 1</p> <!-- Static text instead of dropdown -->
+            <p id="current-team-setup">Team 1</p>
             <p>Enter ship numbers (1-20) and lives based on your throws:</p>
             <label>Ship Number: 
                 <select id="ship-number">
@@ -81,7 +81,39 @@
         <div id="game-phase" style="display: none;">
             <h2>Gameplay</h2>
             <p>Current Turn: <span id="current-team">Team 1</span></p>
-            <input type="text" id="throw-number" placeholder="Throw Number (1-20) or 'B' for bullseye">
+            <label>Throw Number:
+                <select id="throw-number">
+                    <option value="" disabled selected>Select a number</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="B">Bullseye</option>
+                </select>
+            </label>
+            <label>Multiplier:
+                <select id="throw-multiplier">
+                    <option value="1">Single (1 life)</option>
+                    <option value="2">Double (2 lives)</option>
+                    <option value="3">Triple (3 lives)</option>
+                </select>
+            </label>
             <button onclick="submitThrow()">Throw Dart</button>
             <div id="throw-results">
                 <div id="hits-column">
@@ -92,6 +124,10 @@
                     <h3>Misses</h3>
                     <p id="misses-list"></p>
                 </div>
+                <div id="sunk-column">
+                    <h3>Sunk Ships</h3>
+                    <p id="sunk-list"></p>
+                </div>
             </div>
             <div id="team1-status">
                 <h3>Team 1 Ships</h3>
@@ -101,7 +137,6 @@
                 <h3>Team 2 Ships</h3>
                 <p id="team2-ships"></p>
             </div>
-            <!-- Images for hit, miss, sink, and win -->
             <img id="hit-image" src="hit.jpg" alt="Hit!" style="display: none;">
             <img id="miss-image" src="miss.jpg" alt="Miss!" style="display: none;">
             <img id="sink-image" src="sink.jpg" alt="Sunk!" style="display: none;">
