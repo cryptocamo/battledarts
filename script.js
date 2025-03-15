@@ -23,6 +23,7 @@ function showImage(imageId) {
 
 // Prevent accidental refresh
 window.onbeforeunload = function() {
+    console.log("Refresh warning triggered"); // Debug on mobile
     return "Are you sure you want to leave? Your game progress will be lost.";
 };
 
@@ -119,7 +120,7 @@ function updateSetupDisplay() {
     const currentTeamSetup = document.getElementById("current-team-setup");
     if (currentTeamSetup) {
         currentTeamSetup.textContent = `Team ${gameState.currentTeam}`;
-        currentTeamSetup.style.color = gameState.currentTeam === 1 ? "#FFD700" : "#00CED1"; // Gold for Team 1, Turquoise for Team 2
+        currentTeamSetup.style.setProperty("color", gameState.currentTeam === 1 ? "#FFD700" : "#00CED1", "important");
     } else {
         console.error("Element with id 'current-team-setup' not found!");
     }
@@ -239,7 +240,7 @@ function updateGameDisplay() {
     const currentTeamSpan = document.getElementById("current-team");
     if (currentTeamSpan) {
         currentTeamSpan.textContent = `Team ${gameState.currentTeam}`;
-        currentTeamSpan.style.color = gameState.currentTeam === 1 ? "#FFD700" : "#00CED1"; // Gold for Team 1, Turquoise for Team 2
+        currentTeamSpan.style.setProperty("color", gameState.currentTeam === 1 ? "#FFD700" : "#00CED1", "important");
     } else {
         console.error("Element with id 'current-team' not found!");
     }
