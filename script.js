@@ -8,22 +8,51 @@ let gameState = {
     allThrows: []
 };
 
-// Function to show an image for 2 seconds
+// Show image for 2 seconds
 function showImage(imageId) {
     const image = document.getElementById(imageId);
-    image.style.display = "block";
-    setTimeout(() => {
-        image.style.display = "none";
-    }, 2000);
+    if (image) {
+        image.style.display = "block";
+        setTimeout(() => {
+            image.style.display = "none";
+        }, 2000);
+    } else {
+        console.error(`Image with ID '${imageId}' not found!`);
+    }
 }
 
-// Start setup phase for Team 1
+// Prevent accidental refresh
+window.onbeforeunload = function() {
+    return "Are you sure you want to leave? Your game progress will be lost.";
+};
+
+// Start setup phase
 function startSetup() {
-    gameState.teamSize = parseInt(document.getElementById("team-size").value);
-    gameState.currentTeam = 1; // Start with Team 1
-    document.getElementById("team-size-selection").style.display = "none";
-    document.getElementById("setup-phase").style.display = "block";
-    document.getElementById("current-team-setup").textContent = "Team 1";
+    const teamSizeSelect = document.getElementById("team-size");
+    if (!teamSizeSelect) {
+        console.error("Element with id 'team-size' not found!");
+        return;
+    }
+    const teamSizeValue = teamSizeSelect.value;
+    if (!teamSizeValue) {
+        console.error("No team size selected!");
+        alert("Please select a team size!");
+        return;
+    }
+    gameState.teamSize = parseInt(teamSizeValue);
+    gameState.currentTeam = 1;
+
+    const teamSizeSection = document.getElementById("team-size-selection");
+    const setupPhase = document.getElementById("setup-phase");
+
+    if (!teamSizeSection || !setupPhase) {
+        console.error("Required elements for setup phase not found!");
+        return;
+    }
+
+    teamSizeSection.style.display = "none";
+    setupPhase.style.display = "block";
+    updateSetupDisplay();
 }
 
 // Add a ship during setup
@@ -32,6 +61,12 @@ function addShip() {
     const numberInput = document.getElementById("ship-number").value;
     const lives = document.getElementById("ship-lives").value;
     const teamData = team === 1 ? gameState.team1 : gameState.team2;
+    const maxShips = gameState.teamSize === 1 ? 3 : gameState.teamSize === 2 ? 4 : 6;
+
+    if (teamData.ships.length >= maxShips) {
+        alert(`Maximum of ${maxShips} ships reached for Team ${team}!`);
+        return;
+    }
 
     let number;
     if (!numberInput) {
@@ -79,6 +114,17 @@ function updateShipList(team) {
         ).join("<br>");
 }
 
+// Update setup display with team colors
+function updateSetupDisplay() {
+    const currentTeamSetup = document.getElementById("current-team-setup");
+    if (currentTeamSetup) {
+        currentTeamSetup.textContent = `Team ${gameState.currentTeam}`;
+        currentTeamSetup.style.color = gameState.currentTeam === 1 ? "#FFD700" : "#00CED1"; // Gold for Team 1, Turquoise for Team 2
+    } else {
+        console.error("Element with id 'current-team-setup' not found!");
+    }
+}
+
 // Finish setup for a team
 function finishSetup() {
     const team = gameState.currentTeam;
@@ -95,19 +141,17 @@ function finishSetup() {
     alert(`Team ${team} setup complete!`);
 
     if (team === 1) {
-        // Switch to Team 2 setup
         gameState.currentTeam = 2;
-        document.getElementById("current-team-setup").textContent = "Team 2";
+        updateSetupDisplay();
     } else if (team === 2) {
-        // Both teams done, show setup transition
         document.getElementById("setup-phase").style.display = "none";
         document.getElementById("setup-transition").style.display = "block";
     }
 }
 
-// Start gameplay after setup transition
+// Start gameplay
 function startGameplay() {
-    gameState.currentTeam = 1; // Start with Team 1 for gameplay
+    gameState.currentTeam = 1;
     document.getElementById("setup-transition").style.display = "none";
     document.getElementById("game-phase").style.display = "block";
     updateGameDisplay();
@@ -115,14 +159,18 @@ function startGameplay() {
 
 // Submit a throw during gameplay
 function submitThrow() {
-    const throwInput = document.getElementById("throw-number").value.trim().toUpperCase();
+    const throwInput = document.getElementById("throw-number").value;
+    const multiplier = parseInt(document.getElementById("throw-multiplier").value);
     let number;
-    if (throwInput === "B" || throwInput === "BULLSEYE") {
+    if (!throwInput) {
+        alert("Please select a throw number!");
+        return;
+    } else if (throwInput === "B") {
         number = "B";
     } else {
         number = parseInt(throwInput);
         if (isNaN(number) || number < 1 || number > 20) {
-            alert("Enter a number between 1-20 or 'B' for bullseye!");
+            alert("Invalid number selected!");
             return;
         }
     }
@@ -132,23 +180,29 @@ function submitThrow() {
     let result = "Miss!";
     
     for (let ship of defendingTeam.ships) {
-        if (ship.number === number && ship.lives > 0) {
-            ship.lives--;
-            result = ship.lives === 0 ? "Sunk!" : "Hit!";
+        if (ship.number === number) {
+            if (ship.lives > 0) {
+                ship.lives -= multiplier;
+                if (ship.lives < 0) ship.lives = 0;
+                result = ship.lives === 0 ? "Sunk!" : "Hit!";
+            } else {
+                result = "Already Sunk!";
+            }
             break;
         }
     }
 
-    gameState.allThrows.push({ team: attackingTeam, number, result });
+    gameState.allThrows.push({ team: attackingTeam, number, result, multiplier });
     gameState.throwsThisTurn++;
     updateGameDisplay();
-    document.getElementById("throw-number").value = "";
+    document.getElementById("throw-number").selectedIndex = 0;
+    document.getElementById("throw-multiplier").selectedIndex = 0;
 
     if (result === "Sunk!") {
         showImage("sink-image");
     } else if (result === "Hit!") {
         showImage("hit-image");
-    } else if (result === "Miss!") {
+    } else if (result === "Miss!" || result === "Already Sunk!") {
         showImage("miss-image");
     }
 
@@ -180,9 +234,16 @@ function startNextTurn() {
     updateGameDisplay();
 }
 
-// Update game display
+// Update game display with team colors
 function updateGameDisplay() {
-    document.getElementById("current-team").textContent = `Team ${gameState.currentTeam}`;
+    const currentTeamSpan = document.getElementById("current-team");
+    if (currentTeamSpan) {
+        currentTeamSpan.textContent = `Team ${gameState.currentTeam}`;
+        currentTeamSpan.style.color = gameState.currentTeam === 1 ? "#FFD700" : "#00CED1"; // Gold for Team 1, Turquoise for Team 2
+    } else {
+        console.error("Element with id 'current-team' not found!");
+    }
+
     const team1Ships = document.getElementById("team1-ships");
     const team2Ships = document.getElementById("team2-ships");
 
@@ -200,14 +261,19 @@ function updateGameDisplay() {
 
     const teamThrows = gameState.allThrows.filter(t => t.team === gameState.currentTeam);
     const hits = teamThrows
-        .filter(t => t.result === "Hit!" || t.result === "Sunk!")
-        .map(t => `${t.number === "B" ? "Bullseye" : t.number}: ${t.result}`)
+        .filter(t => t.result === "Hit!")
+        .map(t => `${t.number === "B" ? "Bullseye" : t.number} (${t.multiplier}x): Hit!`)
         .join("<br>");
     const misses = teamThrows
         .filter(t => t.result === "Miss!")
         .map(t => `${t.number === "B" ? "Bullseye" : t.number}`)
         .join("<br>");
+    const sunk = teamThrows
+        .filter(t => t.result === "Sunk!" || t.result === "Already Sunk!")
+        .map(t => `${t.number === "B" ? "Bullseye" : t.number}: ${t.result}`)
+        .join("<br>");
 
     document.getElementById("hits-list").innerHTML = hits || "No hits yet.";
     document.getElementById("misses-list").innerHTML = misses || "No misses yet.";
+    document.getElementById("sunk-list").innerHTML = sunk || "No ships sunk yet.";
 }
