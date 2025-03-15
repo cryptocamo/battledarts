@@ -10,181 +10,202 @@ body {
     margin: 0;
 }
 
+/* Base styles for game container */
 #game-container {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
 }
 
-/* Title styling */
+/* White text for non-dropdown elements (except where JS overrides) */
+h1,
+#team-size-selection h2,
+#setup-phase h2,
+#setup-transition h2,
+#game-phase h2,
+#turn-transition h2,
+#setup-phase p,
+#setup-transition p,
+#game-phase p,
+#turn-transition p,
+#ship-list,
+#hits-list,
+#misses-list,
+#sunk-list,
+#team1-ships,
+#team2-ships,
+#hits-column h3,
+#misses-column h3,
+#sunk-column h3,
+#team1-status h3,
+#team2-status h3,
+#setup-phase label,
+#game-phase label {
+    color: white !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Team names styled via JS, but base styling here */
+#current-team-setup,
+#current-team {
+    font-weight: bold;
+}
+
+/* Keep dropdowns default (black text on white bg) */
+select {
+    color: black;
+    background-color: white;
+}
+
 h1 {
     font-family: 'Impact', Arial, sans-serif;
     font-size: 80px;
-    color: white;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* Team size selection heading */
-#team-size-selection h2 {
+#team-size-selection h2,
+#setup-phase h2,
+#setup-transition h2,
+#game-phase h2,
+#turn-transition h2 {
     font-size: 36px;
     font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* Setup phase heading */
-#setup-phase h2 {
-    font-size: 36px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Current team text in setup */
 #current-team-setup {
     font-size: 24px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     margin: 10px 0;
 }
 
-/* Instruction paragraph */
-#setup-phase p {
+/* Larger and more pronounced Current Turn text */
+#game-phase p {
+    font-size: 28px; /* Increased from 20px */
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+#current-team {
+    font-size: 36px; /* Larger team name */
+    font-weight: 900; /* Extra bold */
+    text-transform: uppercase; /* Uppercase for emphasis */
+    letter-spacing: 2px; /* Spacing for prominence */
+}
+
+#setup-phase p,
+#setup-transition p,
+#turn-transition p {
     font-size: 20px;
     font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     margin: 10px 0;
 }
 
-/* Ship list text */
-#ship-list {
+#ship-list,
+#hits-list,
+#misses-list,
+#sunk-list,
+#team1-ships,
+#team2-ships {
     margin-top: 10px;
     text-align: left;
     font-size: 18px;
     font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* Setup transition */
-#setup-transition h2 {
-    font-size: 36px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-#setup-transition p {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    margin: 10px 0;
-}
-
-/* Gameplay heading */
-#game-phase h2 {
-    font-size: 36px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Current turn text */
-#game-phase p {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    margin: 10px 0;
-}
-
-/* Throw results columns */
 #throw-results {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
 }
 
-#hits-column, #misses-column {
-    width: 45%;
+#hits-column, #misses-column, #sunk-column {
+    width: 30%;
     text-align: left;
 }
 
-#hits-column h3, #misses-column h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-#hits-list, #misses-list {
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Team status sections */
-#team1-status, #team2-status {
-    margin-top: 20px;
-}
-
-/* Team status headings */
+#hits-column h3, #misses-column h3, #sunk-column h3,
 #team1-status h3, #team2-status h3 {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Team ships text */
-#team1-ships, #team2-ships {
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Turn transition heading */
-#turn-transition h2 {
-    font-size: 36px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Turn transition text */
-#turn-transition p {
     font-size: 20px;
     font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    margin: 10px 0;
 }
 
-/* Images for hit, miss, sink, and win */
 #hit-image, #miss-image, #sink-image, #win-image {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 50%;
+    left: 50%;
+    max-width: 600px;
+    max-height: 400px;
+    transform: translate(-50%, -50%);
     object-fit: contain;
     z-index: 1000;
     display: none;
     background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
 }
 
-/* Rest of your CSS */
-input, button, select {
-    margin: 5px;
-    padding: 5px;
-    width: 100%;
+/* Button styling */
+button {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white; /* Default text color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#team-size-selection button {
+    background-color: #4CAF50; /* Green */
+}
+
+#setup-phase button:nth-child(3) {
+    background-color: #2196F3; /* Blue for Add Ship */
+    color: white !important; /* Ensure white text */
+}
+
+#setup-phase button:nth-child(4) {
+    background-color: #FF9800; /* Orange for Finish Setup */
+    color: white !important; /* Ensure white text */
+}
+
+#setup-transition button {
+    background-color: #4CAF50; /* Green */
+}
+
+#game-phase button {
+    background-color: #F44336; /* Red */
+}
+
+#turn-transition button {
+    background-color: #9C27B0; /* Purple */
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Input and select styling */
+input, select {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
     box-sizing: border-box;
+}
+
+/* Label styling */
+#setup-phase label,
+#game-phase label {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 5px;
+    display: inline-block;
+}
+
+/* Prevent zooming on mobile */
+input, select {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
 }
 
 /* Media Queries for Mobile Optimization */
@@ -192,63 +213,60 @@ input, button, select {
     h1 {
         font-size: 40px;
     }
-    #team-size-selection h2 {
-        font-size: 24px;
-    }
-    #setup-phase h2 {
+    #team-size-selection h2,
+    #setup-phase h2,
+    #setup-transition h2,
+    #game-phase h2,
+    #turn-transition h2 {
         font-size: 24px;
     }
     #current-team-setup {
         font-size: 18px;
     }
-    #setup-phase p {
-        font-size: 16px;
-    }
-    #ship-list {
-        font-size: 14px;
-    }
-    #setup-transition h2 {
-        font-size: 24px;
-    }
-    #setup-transition p {
-        font-size: 16px;
-    }
-    #game-phase h2 {
-        font-size: 24px;
-    }
     #game-phase p {
+        font-size: 20px; /* Adjusted for mobile */
+    }
+    #current-team {
+        font-size: 24px; /* Adjusted for mobile */
+    }
+    #setup-phase p,
+    #setup-transition p,
+    #turn-transition p {
         font-size: 16px;
+    }
+    #ship-list,
+    #hits-list,
+    #misses-list,
+    #sunk-list,
+    #team1-ships,
+    #team2-ships {
+        font-size: 14px;
     }
     #throw-results {
         flex-direction: column;
     }
-    #hits-column, #misses-column {
+    #hits-column, #misses-column, #sunk-column {
         width: 100%;
         margin-bottom: 10px;
     }
-    #hits-column h3, #misses-column h3 {
-        font-size: 18px;
-    }
-    #hits-list, #misses-list {
-        font-size: 14px;
-    }
+    #hits-column h3, #misses-column h3, #sunk-column h3,
     #team1-status h3, #team2-status h3 {
         font-size: 18px;
     }
-    #team1-ships, #team2-ships {
-        font-size: 14px;
+    #hit-image, #miss-image, #sink-image, #win-image {
+        max-width: 90%;
+        max-height: 90%;
     }
-    #turn-transition h2 {
-        font-size: 24px;
-    }
-    #turn-transition p {
+    button {
+        padding: 10px 20px;
         font-size: 16px;
     }
-    #hit-image, #miss-image, #sink-image, #win-image {
-        width: 100vw;
-        height: 100vh;
-        object-fit: contain;
-        max-width: 100%;
-        max-height: 100%;
+    input, select {
+        width: 100%;
+    }
+    #setup-phase label,
+    #game-phase label {
+        font-size: 16px;
+        display: block;
     }
 }
