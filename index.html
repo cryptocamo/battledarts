@@ -11,11 +11,12 @@
     <div id="game-container">
         <!-- Team Size Selection -->
         <div id="team-size-selection">
-            <h2>Select Team Size</h2>
+            <h2>Select Game Mode</h2>
             <select id="team-size">
                 <option value="1">1v1 (3 ships each)</option>
                 <option value="2">2v2 (4 ships each)</option>
                 <option value="3">3v3 (6 ships each)</option>
+                <option value="1v1v1">1v1v1 (3 ships each)</option>
             </select>
             <button onclick="startSetup()">Start Setup</button>
         </div>
@@ -73,7 +74,7 @@
         <!-- Setup Transition Phase -->
         <div id="setup-transition" style="display: none;">
             <h2>Setup Complete</h2>
-            <p>Both teams have finished setting up their ships.</p>
+            <p>All teams have finished setting up their ships.</p>
             <button onclick="startGameplay()">Start Gameplay</button>
         </div>
 
@@ -136,6 +137,10 @@
             <div id="team2-status">
                 <h3>Team 2 Ships</h3>
                 <p id="team2-ships"></p>
+            </div>
+            <div id="team3-status" style="display: none;">
+                <h3>Team 3 Ships</h3>
+                <p id="team3-ships"></p>
             </div>
             <img id="hit-image" src="hit.jpg" alt="Hit!" style="display: none;">
             <img id="miss-image" src="miss.jpg" alt="Miss!" style="display: none;">
