@@ -8,6 +8,7 @@ body {
     background-repeat: no-repeat;
     min-height: 100vh;
     margin: 0;
+    transition: all 0.3s ease; /* Smooth transition for orientation */
 }
 
 /* Base styles for game container */
@@ -34,11 +35,13 @@ h1,
 #sunk-list,
 #team1-ships,
 #team2-ships,
+#team3-ships,
 #hits-column h3,
 #misses-column h3,
 #sunk-column h3,
 #team1-status h3,
 #team2-status h3,
+#team3-status h3,
 #setup-phase label,
 #game-phase label {
     color: white !important;
@@ -104,7 +107,8 @@ h1 {
 #misses-list,
 #sunk-list,
 #team1-ships,
-#team2-ships {
+#team2-ships,
+#team3-ships {
     margin-top: 10px;
     text-align: left;
     font-size: 18px;
@@ -115,17 +119,17 @@ h1 {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Ensure columns wrap gracefully */
+    flex-wrap: wrap;
 }
 
 #hits-column, #misses-column, #sunk-column {
     width: 30%;
     text-align: left;
-    min-width: 100px; /* Prevent collapse on small screens */
+    min-width: 100px;
 }
 
 #hits-column h3, #misses-column h3, #sunk-column h3,
-#team1-status h3, #team2-status h3 {
+#team1-status h3, #team2-status h3, #team3-status h3 {
     font-size: 20px;
     font-weight: bold;
 }
@@ -210,8 +214,12 @@ input, select {
     -webkit-text-size-adjust: 100%;
 }
 
-/* Media Queries for Mobile Optimization */
-@media screen and (max-width: 600px) {
+/* Media Queries for Mobile Orientation */
+@media screen and (max-width: 600px) and (orientation: portrait) {
+    body {
+        background-size: cover; /* Full coverage in portrait */
+        padding: 10px;
+    }
     h1 {
         font-size: 40px;
     }
@@ -241,19 +249,20 @@ input, select {
     #misses-list,
     #sunk-list,
     #team1-ships,
-    #team2-ships {
+    #team2-ships,
+    #team3-ships {
         font-size: 14px;
     }
     #throw-results {
         flex-direction: column;
-        align-items: center; /* Center columns on mobile */
+        align-items: center;
     }
     #hits-column, #misses-column, #sunk-column {
         width: 100%;
         margin-bottom: 10px;
     }
     #hits-column h3, #misses-column h3, #sunk-column h3,
-    #team1-status h3, #team2-status h3 {
+    #team1-status h3, #team2-status h3, #team3-status h3 {
         font-size: 18px;
     }
     #hit-image, #miss-image, #sink-image, #win-image {
@@ -271,5 +280,81 @@ input, select {
     #game-phase label {
         font-size: 16px;
         display: block;
+    }
+    #game-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) and (orientation: landscape) {
+    body {
+        background-size: contain; /* Fit width in landscape, may show edges */
+        padding: 5px;
+    }
+    h1 {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    #team-size-selection h2,
+    #setup-phase h2,
+    #setup-transition h2,
+    #game-phase h2,
+    #turn-transition h2 {
+        font-size: 20px;
+    }
+    #current-team-setup {
+        font-size: 16px;
+    }
+    #game-phase p {
+        font-size: 18px;
+    }
+    #current-team {
+        font-size: 20px;
+    }
+    #setup-phase p,
+    #setup-transition p,
+    #turn-transition p {
+        font-size: 14px;
+    }
+    #ship-list,
+    #hits-list,
+    #misses-list,
+    #sunk-list,
+    #team1-ships,
+    #team2-ships,
+    #team3-ships {
+        font-size: 12px;
+    }
+    #throw-results {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    #hits-column, #misses-column, #sunk-column {
+        width: 30%;
+        margin-bottom: 5px;
+    }
+    #hits-column h3, #misses-column h3, #sunk-column h3,
+    #team1-status h3, #team2-status h3, #team3-status h3 {
+        font-size: 16px;
+    }
+    #hit-image, #miss-image, #sink-image, #win-image {
+        max-width: 70%;
+        max-height: 70%;
+    }
+    button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    input, select {
+        width: 80px;
+        font-size: 14px;
+    }
+    #setup-phase label,
+    #game-phase label {
+        font-size: 14px;
+        display: inline-block;
+    }
+    #game-container {
+        max-width: 100%;
     }
 }
